@@ -19,7 +19,7 @@
     </div>
 
    <span> <RouterLink to="/Shop"><button>Shop Now</button></RouterLink>
-          <RouterLink to="/LoginIn"> <button>LoginIn</button></RouterLink></span>
+          <RouterLink to="/SignUp"> <button>SignUp</button></RouterLink></span>
 
     </div>
 
@@ -53,7 +53,6 @@
 
 <script>
 export default {
-  
   data() {
     return {
       products: [],
@@ -61,13 +60,6 @@ export default {
   },
 
 
-//     mounted() {
-//     fetch('https://dummyjson.com/products')
-//       .then(res => res.json())
-//       .then(data => {
-//         this.products = data  
-//       })
-// },
 };
 
 
@@ -81,7 +73,6 @@ export default {
   gap: 20px;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   background-image: url(../assets/pattern-background-desktop.svg);
   background-repeat: no-repeat;
   background-size: contain;

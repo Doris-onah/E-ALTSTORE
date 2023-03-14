@@ -1,28 +1,50 @@
-
-import {createStore } from 'vuex'
+import { createStore } from "vuex";
 
 export const store = createStore({
-    state() {
-        return {
-            product: []
-        }
+  state() {
+    return {
+      products: [],
+      isLoggedIn: false,
+    };
+  },
+  mutations: {
+    products(state, payload) {
+      state.products = payload;
+    },
+    login(state) {
+      console.log("login");
+      state.isLoggedIn = true;
+    },
+    logout(state) {
+      console.log("logout");
+      state.isLoggedIn = false;
+    },
+    
+  },
+  actions: {
+    setProducts({ commit }) {
+      fetch("https://dummyjson.com/products")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          commit("products", data.products);
+        });
+    },
+    login({ commit }) {
+      commit("login");
+    },
+    logout({ commit }) {
+      commit("logout");
     }
-    ,
-    mutations: {
-        setProduct(state, payload) {
-            state.product = payload
-        }
-    },
-    actions: {
-        async fetchProduct({ commit }) {
-            const res = await fetch('https://fakestoreapi.com/products')
-            const product = await res.json()
-            commit('setProduct', product)
-        }
-    },
+  },
+ 
     getters: {
-        product(state) {
-            return state.product
-        }
-    }
-})
+      products(state) {
+        return state.products;
+      },
+      isLogged(state) {
+        return state.isLoggedIn;
+      },
+  },
+});
+

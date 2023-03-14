@@ -1,5 +1,33 @@
-<script setup>
+<script >
 import { RouterLink, RouterView } from 'vue-router'
+
+export default {
+
+  name: 'App',
+
+  data() {
+    return {
+   
+    };
+  },
+ 
+  methods: {
+    login () {
+      this.$store.dispatch('login')
+
+    },
+    logout() {
+      this.$store.dispatch('logout')
+    },
+  },
+
+  computed: {
+    isLogged() {
+      return this.$store.getters.isLogged
+
+    },
+  },
+};
 
 </script>
 
@@ -21,14 +49,15 @@ import { RouterLink, RouterView } from 'vue-router'
         <ul>
        <li><RouterLink to="/">Home</RouterLink></li>
        <li> <RouterLink to="/Shop">Shop</RouterLink></li>
-       <li> <RouterLink to="/cart">Cart</RouterLink></li>
-        <li><RouterLink to="/LoginIn">Login</RouterLink></li>
+       <li> <RouterLink to="/CartView">Cart</RouterLink></li>
        <li><RouterLink to="NotFound">404</RouterLink></li>
-       <li><RouterLink to="/SignUp"><button>SignUp</button> </RouterLink></li>
+      <li> <RouterLink to="/SignUp">
+        <button v-if="isLogged" @click="logout">SignOut</button>
+        <button v-else @click="login">SignUp</button>
+      </RouterLink></li>
+
         </ul>
       </div>
-
-    
       </nav>
   </header>
 
@@ -40,11 +69,7 @@ import { RouterLink, RouterView } from 'vue-router'
     </div>
 </template>
 
-<!-- <script>
-import SignUp from './views/SignUp.vue'
-import LoginIn from './views/LoginIn.vue'
 
-</script> -->
 
 <style  scoped
 >

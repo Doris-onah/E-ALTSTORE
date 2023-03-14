@@ -1,6 +1,6 @@
 <template>
     <div class="signpage">
-        <form>
+        <form v-if="!isLogged">
             <label for="name">Name</label>
             <input type="text" id="name"  v-model="name" required/>
             <label for="email">Email</label>
@@ -9,22 +9,31 @@
             <input type="password" id="password" v-model="password" required />
             <label for="password">Confirm Password</label>
             <input type="password" id="password"  required />
-           <input type="submit" id="submit" value="Sign Up" />
+           <input type="submit" id="submit" value="Sign Up"  />
         </form>
     </div>
 </template>
 
 <script>
+import ShopView from "./ShopView.vue";
 export default {
     name: "SignUp",
-    data() {
-        return {
-            email: "",
-            password: "",
-        };
+    components: {
+        ShopView,
     },
     
+    computed: {
+    isLogged() {
+      return this.$store.getters.isLogged
+    },
+  },
+  methods: {
+      onSubmit() {
+      this.submitted = true;
+    },
+}
 };
+
 
 </script>
 <style>
