@@ -1,63 +1,23 @@
 <template>
-  <div v-if="!isLogged">
-    <SignUp/>
-  </div>
-  <div v-else="isLogged">
+  <div>
   <div class="shoppage" >
+    <div class="nested-routes">
+  <span>
+    <RouterLink to="/Shop"></RouterLink>
+   <RouterLink to="/TrendItem">BestSeller</RouterLink>
+   <RouterLink to="/IphoneCart">Trending</RouterLink>
+   </span>
+  <RouterView />
+</div>
 
-      <div class="sales">
-        <div class="sales-item">
-          <div class="sales-content">
-            <button @click="prevPage" :disabled="currentPage === 1">
-              <i class="fa-light fa-chevrons-left"></i>
-             
-            </button>
-            <div v-for="product in products" :key="product.id" class="sales-content-item">
-             <img :src="product.images[0]" alt="product" />
-            </div>
-            <button @click="nextPage" :disabled="currentPage * perPage === increment">
-             Next</button>
-          </div>
-        </div>
-
-        <div class="ads">
-          <div class="ads-1">
-          <div v-for="product in products" :key="product.id" class="sales-content-item">
-              <img :src="product.images[2]" alt="product" />
-            </div>
-          </div>
-        </div>
-      <!-- </div> -->
-    </div>
-
-    <div class="category">
-      <div class="nested-routes">
-        <span
-          >category <RouterLink to="/Shop/IphoneCart">iphone</RouterLink></span
-        >
-      </div>
-      <div class="category-products">
-        <div class="cate"> <RouterView /> </div>
-      </div>
-    </div>
-
-    <div class="trending">
-      <h2>Trending</h2>
-      <TrendItem/>
-    </div>
   </div>
   </div>
-  
 </template>
 
 <script>
-import TrendItem from './TrendItem.vue';
-import SignUp from './SignUp.vue';
 
 export default {
     name: "ShopView",
-    components: { TrendItem ,
-    SignUp},
     data() {
         return {
             increment: 30,
@@ -70,13 +30,11 @@ export default {
             const startIndex = (this.currentPage - 1) * this.perPage;
             const endIndex = startIndex + this.perPage;
             return this.$store.getters.products.slice(startIndex, endIndex);
-            // return this.$store.getters.products;
+          
         },
-       
-    isLogged() {
-      return this.$store.getters.isLogged
-  },
+
     },
+
     methods: {
         getProducts() {
             this.$store.dispatch("setProducts");
@@ -91,91 +49,43 @@ export default {
             this.currentPage--;
             console.log("Current page:", this.currentPage);
         },
+       
     },
     mounted() {
         this.getProducts();
+
     },
 };
 </script>
 
 <style>
-.shoppage {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  gap: 20px;
-}
+ .shoppage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  background: rgb(223, 225, 235);
+    width: 100%;
+  }
 
-.sales {
-  width: 80%;
-  height: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  background-color: #bad0d6;
-  border-radius: 25px;
-}
-.sales-content {
-  width: 900px;
-  height: 400px;
-  display: flex;
-  align-items: center;
-  background-color: #dede61;
-  border-radius: 25px;
-  gap: 20px;
+.nested-routes {
+  margin: 0;
+  width: 90%;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 1px,  rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    /* background-color: #f70b69; */
+  } 
 
-}
-.sales-content-item {
-  width: 400px;
-  height: 400px;
-  /* background-color: #738ab8; */
-  border-radius: 25px;
-}
-.sales-content-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.ads {
-  width: 400px;
-  height: 90%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 25px;
-  gap: 20px;
-}
-.category {
-  width: 80%;
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #c95252;
-  border-radius: 25px;
-}
-.category-products {
-  width: 100%;
-  height: 100%;
-  display: grid-row;
-  flex-direction: column;
-  background-color: #6b5b5b;
-  border-radius: 25px;
-}
+  .nested-routes span {
+   
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset;
 
-.trending {
-  width: 80%;
-  height: 100%;
-  display:grid;
-  align-items: center;
-  background-color: #cef00b;
-  border-radius: 25px;
-}
+  }
+
+  
+
 </style>
 
 

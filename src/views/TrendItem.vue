@@ -1,115 +1,14 @@
-<template>
-  <div class="trend">
-    <div class="trend-items" v-for="product in products" :key="product.id">
-      <div class="trend-img">
-        <img
-          :src="product.images[0]"
-          alt="product"
-          width="200px"
-          height="200px"
-        />
-        <p>title: {{ product.title[0] }}</p>
-        <p>price: {{ product.price }}</p>
-        <button @click="viewDetails(product)">View Details</button>
+
+ <template> 
+<div class="trend-container">
+ <div class="viewdetails">
+    <div class="viewdetails-item">
+    <div v-if="selectedProduct" >
+        <CartView :product="selectedProduct"/>
       </div>
+     <div v-else> <p>No product selected. </p> </div>
     </div>
-  </div>
-</template>
-
-<script>
-import CartView from "./CartView.vue";
-
-export default {
-  name: "TrendItem",
-  components: {
-    CartView,
-  },
-  data() {
-    return {};
-  },
-  methods: {
-    viewDetails(product) {
-      console.log("Selected product:", product);
-      this.$router.push({ name: "CartView", props: { product } });
-   
-    },
-  },
-  computed: {
-    products() {
-      console.log("Products:", this.$store.state.products);
-      return this.$store.state.products;
-    },
-  },
-};
-</script>
-
-<!-- <template>
-    <div class="trend">
-        <div class="trend-itesm" v-for="product in products" :key="product.id">
-        <div class="trend-img">
-            <img :src="product.images[0]" alt="product" width="200px" height="200px" />
-            <p>title: {{ product.title[0] }}</p>
-            <p>price: {{ product.price }}</p>
-            <button @click="viewDetails(product)">View Details</button>
-        </div>
-        </div>
     </div>
-</template>
-
-
-<script>
-import CartView from "./CartView.vue";
-export default {
-  name: "TrendItem",
-  components: {
-    CartView,
-  },
-  data() {
-    return {};
-  },
-  methods: {
-    viewDetails(product) {
-      console.log("Selected product:", product);
-      this.$router.push({ name: "CartView", props: { product } });
-    },
-  },
-  computed: {
-    products() {
-      const products = this.$store.getters.products;
-      console.log("Products:", products);
-      return products;
-    },
-  },
-};
-</script> -->
-
-<!-- <script>
-import CartView from "./CartView.vue";
-export default {
-    name: "TrendItem",
-    components: {
-        CartView,
-    },
-    data() {
-        return {
-            
-        };
-    },
-    methods: {
-        viewDetails(product) {
-            this.$router.push({ name: "CartView", props: { product } });
-        },
-    },
-    computed: {
-        products() {
-            return this.$store.getters.products;
-            
-        },
-    },
-};
-</script>  -->
-
-<!-- <template>
     <div class="trend">
       <div class="trend-item" v-for="product in products" :key="product.id">
         <div class="trend-img">
@@ -119,25 +18,18 @@ export default {
           <button @click="viewDetails(product)">View Details</button>
         </div>
       </div>
-      <cart-view v-if="selectedProduct" :selected-product="selectedProduct" />
+  
+     
     </div>
-  </template> -->
-
-<!-- <template>
-    <div class="trend">
-      <div class="trend-item" v-for="product in products" :key="product.id">
-        <div class="trend-img">
-          <img :src="product.images[0]" alt="product" width="200px" height="200px" />
-          <p>title: {{ product.title }}</p>
-          <p>price: {{ product.price }}</p>
-          <button @click="viewDetails(product)">View Details</button>
-        </div>
-      </div>
-      <selected-product v-if="selectedProduct" :selected-product="selectedProduct" />
+     <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
+        <button @click="nextPage" :disabled="currentPage === increment">
+            Next</button>
     </div>
   </template>
   
   <script>
+
+  
   import CartView from "./CartView.vue";
   export default {
     name: "TrendItem",
@@ -146,6 +38,9 @@ export default {
     },
     data() {
       return {
+        increment: 50,
+            perPage: 10,
+            currentPage: 1,
         selectedProduct: null,
       };
     },
@@ -153,24 +48,112 @@ export default {
       viewDetails(product) {
         this.selectedProduct = product;
       },
+      nextPage() {
+            console.log("Next button clicked");
+            this.currentPage++;
+            console.log("Current page:", this.currentPage);
+        },
+        prevPage() {
+            console.log("Previous button clicked");
+            this.currentPage--;
+            console.log("Current page:", this.currentPage);
+        },
     },
     computed: {
       products() {
-        return this.$store.getters.products;
+        const startIndex = (this.currentPage - 1) * this.perPage;
+            const endIndex = startIndex + this.perPage;
+            return this.$store.getters.products.slice(startIndex, endIndex);
+          
+        // return this.$store.getters.products;
       },
     },
   };
-  </script> -->
+ 
+   
+  </script> 
 
 <style>
-.trend {
-  display: grid;
-  grid-template-columns: auto auto auto auto auto;
-  background-color: brown;
+.trend-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* background-color: #131616; */
+    width: 100%;
+    gap: 20px;
 }
-.trend-itesm {
-  width: 200px;
-  height: 200px;
-  background-color: brown;
+.trend{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 ;
+    /* max-width: 1200px; */
+    /* background-color: #800006; */
+    width: 100%;
+  }
+  
+  .trend-item {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 15px;
+    width: 300px;
+    /* width: calc(33.33% - 30px); */
+  }
+  
+  .trend-img {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .trend-img img {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+  }
+  
+  .trend-items p {
+    font-size: 18px;
+    margin: 0;
+  }
+  
+  .trend-items button {
+    background-color: #f8fc04;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+
+.viewdetails{
+    display: flex;
+   /* justify-content: center;
+   align-items: center; */
+   padding: 0%;
+   height: 100%;
+   
+    /* background-color: #131616; */
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,  rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
+  .viewdetails-item {
+    /* background-color: #e41818; */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 15px;
+    width: 100%;
+ 
+  }
+ 
 </style>

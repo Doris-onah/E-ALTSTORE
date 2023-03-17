@@ -1,6 +1,51 @@
 <template>
     <div class="signpage">
-        <form v-if="!isLogged">
+      <form @submit.prevent="submit">
+        <label for="name">Name</label>
+        <input type="text" id="name" v-model="name" required />
+        <label for="email">Email</label>
+        <input type="email" id="email" v-model="email" required />
+        <label for="password">Password</label>
+        <input type="password" id="password" v-model="password" required />
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" v-model="confirmPassword" required />
+        <input type="submit" id="submit" value="Sign Up" />
+      </form>
+    </div>
+  </template>
+  
+  <script>
+  import ShopView from "./ShopView.vue";
+  
+  export default {
+    name: "SignUp",
+    components: {
+      ShopView,
+    },
+    data() {
+      return {
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      };
+    },
+  
+    methods: {
+      submit() {
+        this.$router.push({ name: "ShopView" });
+      },
+    },
+  };
+  </script>
+  
+
+
+
+
+<!-- <template>
+    <div class="signpage">
+        <form  @submit="submit">
             <label for="name">Name</label>
             <input type="text" id="name"  v-model="name" required/>
             <label for="email">Email</label>
@@ -9,33 +54,44 @@
             <input type="password" id="password" v-model="password" required />
             <label for="password">Confirm Password</label>
             <input type="password" id="password"  required />
-           <input type="submit" id="submit" value="Sign Up"  />
+           <input type="submit" id="submit" value="Sign Up" />
         </form>
     </div>
 </template>
 
 <script>
 import ShopView from "./ShopView.vue";
+
 export default {
     name: "SignUp",
     components: {
         ShopView,
+      
+    },
+    data() {
+        return {
+            name: "",
+            email: "",
+            password: "",
+        };
     },
     
-    computed: {
+  methods: {
+    submit() {  
+      console.log("Submitted");
+      this.$router.push({ name: "ShopView" }); 
+    },
+      
+},
+computed: {
     isLogged() {
       return this.$store.getters.isLogged
     },
   },
-  methods: {
-      onSubmit() {
-      this.submitted = true;
-    },
-}
 };
 
 
-</script>
+</script> -->
 <style>
 .signpage {
     display: flex;

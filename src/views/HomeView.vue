@@ -6,11 +6,11 @@
     <div class="home-con">
     <div class="text">
       <div class="text-con">
-<h1>BE CONNECTED</h1>
-<h2>STAY CONNECTED</h2>
+      
+<h1> <b>BE CONNECTED</b> <br>
+<b>STAY CONNECTED </b></h1>
 
-<p>we have more than 1000 products for you to choose from</p>
-<p>
+<p>we have more than 1000 products for you to choose from
   Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
   Delectus aut distinctio fugit dignissimos ipsam vero numquam
    voluptatibus. Similique dolorum delectus commodi ducimus? 
@@ -133,7 +133,7 @@ main div {
 } */
 .text {
   width: 100%;
-  height: 100%;
+  height: 600px;
   display: flex;
   /* background-color: red; */
   flex-direction: column;
@@ -143,15 +143,18 @@ main div {
 }
 .text-con {
   width: 60%;
-  height: 50%;
+  height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 h1, h2 {
   font-size: 50px;
   color: #090909;
   font-weight: 900;
+  
   line-height: 1.5em;
   font-family: Montserrat;
 }
@@ -194,7 +197,16 @@ i {
   font-size: 20px;
 
 }
-
+span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+p {
+  font-size: 20px;
+ 
+}
 @media screen {
   
 }
